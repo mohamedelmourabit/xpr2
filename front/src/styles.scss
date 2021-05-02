@@ -1,0 +1,48 @@
+@import "assets/base";
+
+table {
+  width: 100%;
+}
+
+.mat-row:hover {
+  background-color: blanchedalmond;
+}
+.mat-row mat-checkbox {
+
+}
+.mat-row:hover mat-checkbox {
+  display: block;
+}
+
+
+
+
+
+
+tr.mat-header-row {
+  height: 25px;
+  font-size: 11px;
+}
+
+.ng-select.custom {
+  border:0px;
+  min-height: 0px;
+  border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {
+  min-height: 0px;
+  border-radius: 0;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+  box-shadow:0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12)
+}
+

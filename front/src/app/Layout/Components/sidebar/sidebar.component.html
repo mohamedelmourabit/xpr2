@@ -1,0 +1,201 @@
+<div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme" (mouseover)="sidebarHover()"
+     (mouseout)="sidebarHover()">
+  <div class="app-header__logo">
+    <div class="logo-src"></div>
+    <div class="header__pane ml-auto">
+      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+              [ngClass]="{'is-active' : globals.toggleSidebar}" (click)="toggleSidebar()">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="app-sidebar-content">
+    <div class="app-sidebar-scroll">
+      <perfect-scrollbar [autoPropagation]="true">
+        <div class="v-sidebar-menu vsm-default">
+          <div class="vsm-list">
+            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+              <ngb-panel>
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">Tableau de bord</div>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="dashboardsMenu">
+                <ng-template ngbPanelHeader>
+                  <button  class="vsm-link" [routerLink]="['/']">
+                    <i class="vsm-icon pe-7s-home"></i>
+                    <span class="vsm-title" > Home</span>
+                  </button>
+                </ng-template>
+
+              </ngb-panel>
+              <ngb-panel id="pagesMenu">
+                <ng-template ngbPanelHeader>
+                    <div class="vsm-header">Principaux</div>
+
+                </ng-template>
+              </ngb-panel>
+                <ngb-panel id="ColisMenu" *ngIf="this.showColis">
+                  <ng-template ngbPanelHeader>
+                    <button  class="vsm-link" [routerLink]="['/colis']">
+                      <i class="vsm-icon pe-7s-box2"></i>
+                      <span class="vsm-title" > Colis </span>
+
+                    </button>
+                  </ng-template>
+                </ngb-panel>
+              <ngb-panel id="ColisMenu2" *ngIf="this.showBonRamassages">
+                  <ng-template ngbPanelHeader>
+                    <button  class="vsm-link"  [routerLink]="['/bonsRamassages']">
+                      <i class="vsm-icon pe-7s-file"></i>
+                      <span class="vsm-title" > Bons de Ramassage </span>
+                    </button>
+                  </ng-template>
+              </ngb-panel>
+              <ngb-panel id="ColisMenu3" *ngIf="this.showBonRetours">
+                  <ng-template ngbPanelHeader>
+                    <button  class="vsm-link"  [routerLink]="['/bonDeRetours']">
+                      <i class="vsm-icon pe-7s-back-2"></i>
+                      <span class="vsm-title">Bons de retour </span>
+                    </button>
+                  </ng-template>
+
+              </ngb-panel>
+
+              <ngb-panel id="secondaireMenu3" *ngIf="this.showFactures">
+                <ng-template ngbPanelHeader >
+                  <button  class="vsm-link"  [routerLink]="['/factures']">
+                    <i class="vsm-icon pe-7s-file"></i>
+                    <span class="vsm-title">Factures </span>
+                  </button>
+                </ng-template>
+              </ngb-panel>
+
+                <ngb-panel id="elementsMenu4" *ngIf="this.showBonExpeditions">
+                  <ng-template ngbPanelHeader>
+                    <button ngbPanelToggle class="vsm-link"  [routerLink]="['/bonExpeditionsStock']">
+                      <i class="vsm-icon pe-7s-note2"></i>
+                      <span class="vsm-title">Bon d'envoi stock </span>
+                    </button>
+                  </ng-template>
+                </ngb-panel>
+
+
+
+              <ngb-panel>
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">Stockage</div>
+                </ng-template>
+              </ngb-panel>
+
+
+              <ngb-panel id="elementsMenu" *ngIf="this.showColis">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link"  [routerLink]="['/colisStock']">
+                    <i class="vsm-icon pe-7s-box1"></i>
+                    <span class="vsm-title">Colis stock</span>
+                  </button>
+                </ng-template>
+              </ngb-panel>
+
+              <ngb-panel id="elementsMenu2" *ngIf="this.showColis">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link"  [routerLink]="['/produitsStock']">
+                    <i class="vsm-icon pe-7s-server"></i>
+                    <span class="vsm-title">Produits stock</span>
+
+                  </button>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="elementsMenu3" *ngIf="this.showColis">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link"  [routerLink]="['/bonProduits']">
+                    <i class="vsm-icon pe-7s-file"></i>
+                    <span class="vsm-title">Bon de produit </span>
+
+                  </button>
+                </ng-template>
+              </ngb-panel>
+
+
+
+              <ngb-panel id="secondaireMenu">
+                <ng-template ngbPanelHeader>
+
+                  <div class="vsm-header">Secondaires</div>
+
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="secondaireMenu1" *ngIf="this.showLivreurs">
+                <ng-template ngbPanelHeader >
+                  <button  class="vsm-link"  [routerLink]="['/livreurs']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">Livreurs</span>
+
+                  </button>
+                </ng-template>
+              </ngb-panel>
+
+
+
+
+              <ngb-panel id="secondaireMenu4" *ngIf="this.showDemandes">
+                <ng-template ngbPanelHeader >
+                  <button  class="vsm-link"  [routerLink]="['/demandes']">
+                    <i class="vsm-icon pe-7s-headphones"></i>
+                    <span class="vsm-title">Réclamations </span>
+                  </button>
+                </ng-template>
+
+              </ngb-panel>
+              <ngb-panel id="secondaireMenu5" *ngIf="this.showUtilisateurs">
+                <ng-template ngbPanelHeader >
+                  <button  class="vsm-link"  [routerLink]="['/utilisateurs']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">Mon Staff</span>
+                  </button>
+                </ng-template>
+
+              </ngb-panel>
+
+              <ngb-panel id="secondaireMenu6" *ngIf="this.showEntites">
+                <ng-template ngbPanelHeader >
+                  <button  class="vsm-link"  [routerLink]="['/entites']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">Mes entitès</span>
+                  </button>
+                </ng-template>
+
+                <ng-template ngbPanelHeader *ngIf="this.showClient">
+                  <button  class="vsm-link"  [routerLink]="['/clients']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">Mes clients</span>
+                  </button>
+                </ng-template>
+
+                <ng-template ngbPanelHeader *ngIf="this.showUtilisateurs">
+                  <button  class="vsm-link"  [routerLink]="['/nouveauCompte']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">Nouveau compte</span>
+                  </button>
+                </ng-template>
+
+                <ng-template ngbPanelHeader *ngIf="this.showNews">
+                  <button  class="vsm-link"  [routerLink]="['/news']">
+                    <i class="vsm-icon pe-7s-users"></i>
+                    <span class="vsm-title">News</span>
+                  </button>
+                </ng-template>
+
+              </ngb-panel>
+
+            </ngb-accordion>
+
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

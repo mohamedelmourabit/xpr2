@@ -1,0 +1,628 @@
+
+
+<div class="app-page-title"><div class="page-title-wrapper">
+    <div class="page-title-heading"><div class="page-title-icon">
+        <i class="bg-mean-fruit icon icon-gradient pe-7s-box1"></i>
+    </div>
+        <div> Nouveau Colis  <div class="page-title-subheading">
+        </div></div></div>
+    <div class="page-title-actions">
+       <button type="button" (click)="openLarge(content6)" class="btn-shadow d-inline-flex align-items-center btn btn-success"><fa-icon class="ng-fa-icon mr-2" ng-reflect-icon="[object Object]"><svg role="img" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></fa-icon> Nouveau Colis</button></div></div>
+
+
+
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header">
+                Colis
+            </div>
+            <div class="card-body">
+                    <ul ngbNav #nav2="ngbNav" class="nav-tabs">
+                        <li ngbNavItem>
+                            <a ngbNavLink>Nouveau Colis</a>
+                            <ng-template ngbNavContent>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-10">
+                                        <button type="button"
+                                                style="margin-left: 10px;"
+                                                class="btn btn-primary"
+                                                (click)="isFilterCollapsed = !isFilterCollapsed"
+                                                [attr.aria-expanded]="!isFilterCollapsed"
+                                                aria-controls="collapseExample">
+                                           <i class="pe-7s-filter"></i> Filtre
+                                        </button>
+                                            <div class="row mt-3" id="collapseExample"  [ngbCollapse]="isFilterCollapsed">
+                                            <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                <label for="filtredPage">Page</label>
+                                                <ng-select  id="filtredPage" [(ngModel)]="filtredPage" (change)="updatedFiltre('size',filtredPage)"  placeholder="Sélectionnez le nombre de colis">
+                                                    <ng-option *ngFor="let page of pages" [value]="page">{{page}}</ng-option>
+                                                </ng-select>
+                                            </div>
+                                            </div>
+                                                <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="filtredStatut">Statut</label>
+                                                    <ng-select  id="filtredStatut" [(ngModel)]="filtredStatut.code" (change)="updatedFiltre('statut.code',filtredStatut.code)"  placeholder="Sélectionnez un statut">
+                                                        <ng-option *ngFor="let statut of statuts" [value]="statut.code">{{statut.libelle}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="villeFiltre">Ville</label>
+                                                    <ng-select  id="villeFiltre" [(ngModel)]="filtredVille.nom" (change)="updatedFiltre('villeDestination.nom',filtredVille.nom)" placeholder="Sélectionnez une ville">
+                                                        <ng-option *ngFor="let ville of villes" [value]="ville.nom">{{ville.nom}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="periode" style="margin-bottom: 25px;">Période</label>
+                                                        <input id="periode" type="text"  matInput placeholder="Sélectionnez une période"
+                                                               ngxDaterangepickerMd
+                                                               [locale]="{applyLabel: 'valider', format: 'DD/MM/YYYY'}"
+                                                               startKey="start"
+                                                               endKey="end"
+                                                               [(ngModel)]="selectedPeriode"
+
+                                                               name="daterange"/>
+                                                   </div>
+                                                </div>
+
+                                               </div>
+
+                                                </div>
+
+                                        <div class="col-md-2">
+                                            <mat-form-field >
+
+                                                <input type="text" style="margin-top: 10px"  matInput [(ngModel)]="filter" (keyup)="updatedFiltre('mc', $event.target?.value)" placeholder="Filter" >
+
+                                            </mat-form-field>
+                                        </div>
+
+                                        </div>
+
+
+
+
+                                <div *ngIf="!isLoading">
+                                <table mat-table (matSortChange)="sortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                                    <!-- Checkbox Column -->
+                                    <ng-container matColumnDef="select">
+                                        <th mat-header-cell *matHeaderCellDef >
+                                            <mat-checkbox  (change)="$event ? masterToggle() : null"
+                                                          [checked]="selection.hasValue() && isAllSelected()"
+                                                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                          [aria-label]="checkboxLabel()">
+                                            </mat-checkbox>
+                                        </th>
+                                        <td mat-cell *matCellDef="let row" width ="5%">
+                                            <mat-checkbox  (click)="$event.stopPropagation()"
+                                                          (change)="$event ? selection.toggle(row) : null"
+                                                          [checked]="selection.isSelected(row)"
+                                                          [aria-label]="checkboxLabel(row)">
+                                            </mat-checkbox>
+                                        </td>
+                                    </ng-container>
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="createdDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width ="7%"> DATE </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}} </td>
+                                </ng-container>
+
+                                    <ng-container matColumnDef="numCommande">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header width ="14%"> N°commande </th>
+                                        <td mat-cell *matCellDef="let element">{{element.numCommande}}</td>
+                                    </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="statut">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="14%"> STATUT </th>
+                                    <td mat-cell *matCellDef="let element"><div class="badge badge-primary" style="cursor: pointer" (click)="selectedColis(element,templateColis)"> <i class="pe-7s-look"></i> {{element.statut.libelle}}</div> </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="codeEnvoi">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> CODE ENVOI </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.codeEnvoi}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="idIntern">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="7%"> ID INTERN </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.idIntern}} </td>
+                                </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="destinataire">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> DESTINATAIRE </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.destinataire}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="telephone">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> TÉLÉPHONE </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="villeDestination.nom">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="8%"> VILLE </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.villeDestination.nom}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="ligneColis[0].produit.nom">
+                                        <th mat-header-cell *matHeaderCellDef  width ="10%"> Nom </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ligneColis[0].produit != undefined ? element.ligneColis[0].produit.nom : element.ligneColis[0].variante.produit.nom }} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="ligneColis[0].prix">
+                                        <th mat-header-cell *matHeaderCellDef width ="7%"> Prix </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ligneColis[0].prix | currency:'DH':'symbol':undefined:'fr'}} </td>
+                                    </ng-container>
+
+
+
+
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="outils">
+                                        <th mat-header-cell *matHeaderCellDef width ="7%"> OUTILS </th>
+
+                                           <td mat-cell *matCellDef="let element" >
+
+                                               <div class="d-inline-block" ngbDropdown>
+
+                                                       <div class="font-icon-wrapper font-icon-sm" ngbDropdownToggle>
+
+                                                   <i class="pe-7s-menu icon-gradient bg-ripe-malin"></i>
+                                                       </div>
+
+                                                   <div ngbDropdownMenu>
+                                                       <button class="dropdown-item" (click)="showModalDeleteColis(element,templateDeleteColis)"><i class="pe-7s-trash"></i> Supprimer</button>
+                                                       <button class="dropdown-item" (click)="showModalModifierColis(element,templateModifierColis)"><i class="fa fa-pencil"></i> Modifier</button>
+
+                                                   </div>
+                                               </div>
+
+
+                                           </td>
+
+
+                                    </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                    (click)="selection.toggle(row)" >
+                                </tr>
+                                </table>
+                                <mat-paginator #pagination
+                                               [length]="size "
+                                               [pageSize]="pageSize "
+                                               [pageSizeOptions]="pageSizeOptions "
+                                               (page)="onPaginateChange($event) ">
+                                </mat-paginator>
+                                </div>
+
+
+
+
+
+
+                            </ng-template>
+                        </li>
+
+
+                        <li ngbNavItem>
+                            <a ngbNavLink>Statistiques des colis</a>
+                            <ng-template ngbNavContent>Statistiques des colis</ng-template>
+                        </li>
+                    </ul>
+
+
+
+                    <div [ngbNavOutlet]="nav2"></div>
+            </div>
+    </div>
+
+
+    </div>
+
+
+</div>
+
+
+<ng-template #content6 let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title" >Nouveau Colis</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div *ngIf="errorForm"
+             class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </div>
+    <form #f="ngForm" (ngSubmit)="ajouterColis(f.value)">
+    <div class="modal-body">
+        <div style="overflow: auto;
+    display: flex;
+    flex-direction: column;">
+        <div class="card main-card mb-3">
+
+            <div class="card-body">
+                <ul ngbNav #nav3="ngbNav" class="nav-tabs">
+                    <li ngbNavItem>
+                        <a ngbNavLink><i class="pe-7s-box2"></i> Insérer Manuellement</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                <div class="position-relative form-group"><label for="destinataire"><i class="pe-7s-user"></i> DESTINATAIRE</label>
+                                    <input id="destinataire" name="destinataire" ngModel type="text" class="mb-2 form-control-sm form-control" required>
+                                </div>
+                                <div class="position-relative form-group"><label for="telephone"><i class="pe-7s-phone"></i> TELEPHONE</label>
+                                    <input id="telephone" name="telephone" type="text" ngModel class="mb-2 form-control-sm form-control" required>
+                                </div>
+
+                                <div class="position-relative form-group"><label for="prix"><i class="fa fa-money"></i>  PRIX</label>
+                                    <input id="prix" name="prix" type="number" ngModel class="mb-2 form-control-sm form-control" required>
+                                </div>
+
+                                <div class="position-relative form-group">
+                                    <label for="ville"><i class="fa fa-map-marker"></i>  VILLE</label>
+                                    <ng-select  id="ville" name="ville" [(ngModel)]="selectedVille">
+                                        <ng-option *ngFor="let ville of villes" [value]="ville.nom">{{ville.nom}}</ng-option>
+                                    </ng-select></div>
+
+                                <div class="position-relative form-group"><label for="produit"><i class="fa fa-shopping-cart"></i> PRODUIT</label>
+                                    <input id="produit" name="produit" ngModel type="text" class="mb-2 form-control-sm form-control" required>
+                                </div>
+
+                                <div class="position-relative form-group"><label for="idIntern"><i class="fa fa-font-awesome"></i> ID-INTERN</label>
+                                    <input id="idIntern" name="idIntern" ngModel type="text" class="mb-2 form-control-sm form-control" required>
+                                </div>
+
+                                <div class="position-relative form-group"><label for="addresse"><i class="fa fa-home"></i> Address</label>
+                                    <textarea id="addresse" name="addresse" ngModel class="mb-2 form-control-sm form-control" required></textarea>
+                                </div>
+
+                                <div class="position-relative form-group"><label for="remarque"><i class="fa fa-comment"></i> Remarque</label>
+                                    <textarea id="remarque" name="remarque" ngModel  ngModeltype="text" class="mb-2 form-control-sm form-control"></textarea>
+                                </div>
+
+                                </div>
+                            </div>
+
+
+                        </ng-template>
+
+
+                    </li>
+
+
+
+                    <li ngbNavItem>
+                        <a ngbNavLink><i class="fa fa-file-excel-o"></i> Importer d'un excel</a>
+                        <ng-template ngbNavContent>
+
+
+                                <div class="position-relative form-group"><label for="file">File</label>
+                                    <input  id="file" type="file" name="file" class="form-control-file">
+                                    <p>Remarque : Veuillez accepter la forme d'excel suivante (FORMAT XLSX Seulement) : <a target="_blank" href="./../assets/format.xlsx" >Format</a> pour importer vos colis</p>
+                                </div>
+
+
+
+                        </ng-template>
+
+
+                    </li>
+                </ul>
+                <div [ngbNavOutlet]="nav3"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Close click')">Annuler</button>
+        <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+    </div>
+    </form>
+</ng-template>
+
+
+<ng-template #templateColis let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+         <div class="font-icon-wrapper" style="font-size: 25px;"><i class="pe-7s-info"></i> Informations du Colis # {{selectColis.numCommande}}</div>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <ul ngbNav #nav4="ngbNav" class="nav-tabs">
+            <li ngbNavItem>
+                <a ngbNavLink><i class="pe-7s-box2"></i> Détail Colis</a>
+                <ng-template ngbNavContent>
+                <div style="padding: 20px">
+                    <div class="row">
+                            <div class="position-relative form-group">
+                                <label for="destinataire"> <i class="pe-7s-user"></i> <b> DESTINATAIRE: </b> </label>
+                                <span class="labelModal" > {{selectColis.destinataire }}</span>
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="position-relative form-group"><label for="telephone"><i class="pe-7s-phone"></i><b> TELEPHONE:</b>  </label>
+                                <span class="labelModal" > {{selectColis.telephone }}</span>
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="position-relative form-group"><label for="prix"><i class="fa fa-money"></i>  <b>PRIX:</b></label>
+                                <span class="labelModal" > {{selectColis.ligneColis[0].prix }}</span>
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="position-relative form-group">
+                                <label for="ville"><i class="fa fa-map-marker"></i> <b>VILLE:</b> </label>
+
+                                <span class="labelModal" > {{selectColis.villeDestination.nom }}</span>
+                            </div>
+                    </div>
+                    <div class="row">
+                                <div class="position-relative form-group"><label for="produit"><i class="fa fa-shopping-cart"></i> <b>PRODUIT:</b> </label>
+                                    <span class="labelModal" > {{selectColis.ligneColis[0].produit!=null ? selectColis.ligneColis[0].produit.nom : selectColis.ligneColis[0].variante.produit.nom  }}</span> </div>
+                    </div>
+                    <div class="row">
+                                <div class="position-relative form-group"><label for="idIntern"><i class="fa fa-font-awesome"></i> <b>ID-INTERN:</b> </label>
+                                    <span class="labelModal" > {{selectColis.idIntern }}</span>
+                                </div>
+                    </div>
+                    <div class="row">
+
+                                <div class="position-relative form-group"><label for="address"><i class="fa fa-home"></i> <b>Adresse:</b> </label>
+                                    <span class="labelModal" > {{selectColis.adresse}}</span></div>
+                    </div>
+                    <div class="row">
+                                <div class="position-relative form-group"><label for="remarque"><i class="fa fa-comment"></i> <b>Remarque:</b> </label>
+                                    <span class="labelModal" > {{selectColis.remarque}}</span></div></div>
+
+
+                </div>
+                </ng-template>
+            </li>
+            <li ngbNavItem>
+                <a ngbNavLink><i class="fa fa-flag-checkered"></i> Statut En cours</a>
+                <ng-template ngbNavContent>
+
+                <p style="margin: 10px">Le status actuel du colis est</p>
+                    <button class="btn btn-primary"> {{selectColis.statut.libelle}}</button>
+
+                </ng-template>
+            </li>
+
+            <li ngbNavItem>
+                <a ngbNavLink><i class="fa fa-history"></i>   Historique</a>
+                <ng-template ngbNavContent>
+
+                    <div class="vertical-time-simple vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+
+                        <div class="vertical-timeline-item vertical-timeline-element"  *ngFor="let item of currentColisHistorique">
+                            <div><span class="vertical-timeline-element-icon bounce-in"></span>
+                                <div class="vertical-timeline-element-content bounce-in">
+                                    <h4 class="timeline-title" style=" margin-bottom: 0px;">{{item.statut}}</h4>
+                                    <p   style="margin-bottom: 0px" *ngIf="item.dateCreation">{{item.dateCreation | date:'dd/MM/yyyy HH:mm'}}</p>
+                                    <p>{{item.utilisateur.nom}} {{item.utilisateur.prenom}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </ng-template>
+            </li>
+            <li ngbNavItem>
+                <a ngbNavLink><i class="pe-7s-comment"></i> Commentaire</a>
+                <ng-template ngbNavContent>
+
+                    <div class="card">
+                        <div class="card-header"></div>
+                        <div class="card-body">
+                            <table class="">
+                                <tbody>
+                                    <tr *ngFor="let item of currentColisCommentaire">
+                                       <td>
+                                           <div class="widget-content p-0">
+                                               <div class="widget-content-wrapper">
+                                                   <div class="widget-content-left mr-3">
+                                                       <div class="widget-content-left"><img width="40" src="./assets/images/avatars/1.jpg" alt="" class="rounded-circle"></div>
+                                                   </div><div class="widget-content-left flex2">
+                                                   <div class="widget-heading">{{item.commentaire}} <button type="button" class="close" (click)="deleteCommentairesColis(item.id)">
+                                                       <span aria-hidden="true">&times;</span></button></div>
+
+                                                   <div class="widget-subheading opacity-7">{{item.createdDate | date:'dd/MM/yyyy HH:mm'}}</div>
+
+                                               </div></div>
+                                           </div>
+
+                                       </td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="card-footer">
+                            <form #f="ngForm" (ngSubmit)="addCommentairesColis(selectColis.numCommande)" >
+                                <div *ngIf="errorAddCommentaireForm"
+                                     class="alert alert-danger">
+                                    {{errorAddCommentaireMessage}}
+                                </div>
+                                <textarea id="newCommentaire" name="newCommentaire" style="width: 100%; resize:none;in-height: auto;height: 84px;padding-right: 46px;eight: 36px;
+    border: 1px solid #E2E7EB;border-radius: 2px;font-size: 12px;padding: 0 16px 0;background: #fff;"
+                                          [(ngModel)]="newCommentaire"></textarea>
+
+                                <button class="btn-sm pull-right btn-primary" type="submit" [disabled]="!f.valid" ><i class="pe-7s-comment"></i> Ajouter</button>
+                                </form>
+                        </div>
+                    </div>
+
+
+
+
+
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav4"></div>
+
+    </div>
+
+
+</ng-template>
+
+
+
+<ng-template #templateDeleteColis let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+
+        <div class="row">
+
+         <div class="col-md-12" style="font-size: 25px;"><i class="pe-7s-info"></i> Suppression du colis # {{currentColis.numCommande}} </div>
+        </div>
+
+
+
+
+
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div class="modal-body">
+        <div class="row" style="margin: 10px" *ngIf="errorDeleteForm">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    {{errorDeleteMessage}}
+                </div>
+            </div>
+        </div>
+
+            <p>Est-vous sure de vouloir supprimer le colis ? {{currentColis.numCommande}}</p>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  aria-label="Close"  (click)="d('Cross click')">Annuler</button>
+        <button class="button btn-warning pull-right" (click)="deleteColis(currentColis.numCommande,templateDeleteColis)"><i class="pe-7s-trash"></i> Supprimer</button>
+
+    </div>
+
+
+</ng-template>
+
+
+
+<ng-template #templateModifierColis let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" >Modification du colis # {{updatedColis.numCommande}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+
+    </div>
+    <form #f="ngForm" (ngSubmit)="modifierColis(f.value)">
+        <div class="modal-body">
+
+            <div *ngIf="errorUpdateForm"
+                 class="alert alert-danger">
+                {{errorUpdateMessage}}
+            </div>
+
+            <div class="card main-card mb-3">
+
+                <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="position-relative form-group"><label for="destinataire"><i class="pe-7s-user"></i>  DESTINATAIRE</label>
+                                            <input id="destinataire3" name="destinataire" [(ngModel)]="updatedColis.destinataire" type="text" class="mb-2 form-control-sm form-control" required>
+                                        </div>
+                                        <div class="position-relative form-group"><label for="telephone"><i class="pe-7s-phone"></i> TELEPHONE</label>
+                                            <input id="telephone3" name="telephone"  [(ngModel)]="updatedColis.telephone" type="text" ngModel class="mb-2 form-control-sm form-control" required>
+                                        </div>
+
+                                        <div class="position-relative form-group"><label for="prix"><i class="fa fa-money"></i> PRIX</label>
+                                            <input id="prix3" name="prix" type="number" [(ngModel)]="updatedColis.ligneColis[0].prix" ngModel class="mb-2 form-control-sm form-control" required>
+                                        </div>
+
+                                        <div class="position-relative form-group">
+                                            <label for="ville"><i class="fa fa-map-marker"></i>  VILLE</label>
+                                            <ng-select  id="ville3" name="ville" [(ngModel)]="updatedColis.villeDestination.nom">
+                                                <ng-option *ngFor="let ville of villes" [value]="ville.nom">{{ville.nom}}</ng-option>
+                                            </ng-select>
+
+
+                                        </div>
+
+                                        <div class="position-relative form-group">
+                                            <label for="statut3"> Statut</label>
+                                            <ng-select  id="statut3" name="statut" [(ngModel)]="updatedColis.statut.code">
+                                                <ng-option *ngFor="let statut of statuts" [value]="statut.code">{{statut.libelle}}</ng-option>
+                                            </ng-select></div>
+
+                                        <div class="position-relative form-group"><label for="produit"><i class="fa fa-shopping-cart"></i>   PRODUIT</label>
+                                            <input id="produit3" name="produit" [(ngModel)]="updatedColis.ligneColis[0].produit.nom" type="text" class="mb-2 form-control-sm form-control" required>
+                                        </div>
+
+                                        <div class="position-relative form-group"><label for="idIntern"><i class="fa fa-font-awesome"></i> ID-INTERN</label>
+                                            <input id="idIntern3" name="idIntern" [(ngModel)]="updatedColis.idIntern" type="text" class="mb-2 form-control-sm form-control" required>
+                                        </div>
+
+                                        <div class="position-relative form-group"><label for="addresse"><i class="fa fa-home"></i> Address</label>
+                                            <textarea id="address3" name="addresse" [(ngModel)]="updatedColis.adresse" class="mb-2 form-control-sm form-control" required></textarea>
+                                        </div>
+
+                                        <div class="position-relative form-group"><label for="remarque"><i class="fa fa-comment"></i> Remarque</label>
+                                            <textarea id="remarque3" name="remarque"  [(ngModel)]="updatedColis.remarque" ngModeltype="text" class="mb-2 form-control-sm form-control"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="d('Cross click')">Annuler</button>
+            <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
+</ng-template>

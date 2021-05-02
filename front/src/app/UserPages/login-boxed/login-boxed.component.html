@@ -1,0 +1,53 @@
+<div class="h-100 bg-plum-plate bg-animation">
+  <div class="d-flex h-100 justify-content-center align-items-center">
+    <div class="mx-auto app-login-box col-md-8">
+      <div class="app-logo-inverse mx-auto mb-3"></div>
+      <div class="modal-dialog w-100 mx-auto">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="h5 modal-title text-center">
+              <h4 class="mt-2">
+                <div>Content de te revoir,</div>
+                <span>Veuillez vous connecter à votre compte ci-dessous.</span></h4>
+            </div>
+            <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
+              <div class="alert alert-danger" *ngIf="mode==1">
+                <strong>Le nom d'utilisateur ou mot de passe est incorrect </strong>
+              </div>
+              <div class="alert alert-success" *ngIf="mode==2">
+                <strong> Authentification réussie</strong>
+              </div>
+            <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_"
+                 class="form-group">
+              <div><input id="exampleInput1" type="email"  ngModel="" name="username" placeholder="Saisissez votre email." required
+                          aria-required="true" class="form-control"
+                          aria-describedby="exampleInputGroup1__BV_description_">
+                <small tabindex="-1" id="exampleInputGroup1__BV_description_" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec qui que ce soit
+                </small>
+              </div>
+            </div>
+            <div id="exampleInputGroup2" role="group" class="form-group">
+              <div><input id="exampleInput2" type="password" ngModel="" name="password" placeholder="Saisissez votre mot de passe..." required
+                          aria-required="true" class="form-control"></div>
+            </div>
+
+            <div class="divider"></div>
+            <h6 class="mb-0">
+              Pas de compte ?
+              <a class="text-primary">Demandé un nouveau compte</a></h6>
+          <div class="modal-footer clearfix">
+            <div class="float-left"><a  href="forgot-password" class="btn-lg btn btn-link">Mot de passe oublié</a></div>
+            <div class="float-right">
+              <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary btn-lg" >Se connecter </button>
+            </div>
+
+          </div>
+            </form>
+        </div>
+      </div>
+      <div class="text-center text-white opacity-8 mt-3">
+        Copyright © XPR 2021
+      </div>
+    </div>
+  </div>
+</div>

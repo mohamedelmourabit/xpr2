@@ -1,0 +1,144 @@
+<div class="row mt-4">
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Colis en attente</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-success"><span>1896</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Colis</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-primary"><span>$ 568</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Colis livré</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-warning"><span>$14M</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Colis Retourné</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-danger"><span>46%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Bon ramassages</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-danger"><span>46%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading">Factures</div>
+          <div class="widget-subheading"></div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-danger"><span>46%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="no-gutters row">
+   <div class="col-sm-12 col-md-6 col-xl-6">
+     <div class="d-block">
+       <canvas baseChart
+               [datasets] = "barChartData"
+               [labels] = "barChartLabels"
+               [options] = "barChartOptions"
+               [plugins] = "barChartPlugins"
+               [legend] = "barChartLegend"
+               [chartType]="barChartType">
+       </canvas>
+     </div>
+     <div class="divider"></div>
+     <div class="text-center">
+       <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
+     </div>
+
+   </div>
+
+
+   <div class="col-sm-12 col-md-6 col-xl-6">
+
+     <ngb-carousel *ngIf="images">
+       <ng-template ngbSlide>
+         <img [src]="images[0]" width="100%" alt="Random first slide">
+         <div class="carousel-caption">
+           <h3>First slide label</h3>
+           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+         </div>
+       </ng-template>
+       <ng-template ngbSlide>
+         <img [src]="images[1]" width="100%" alt="Random second slide">
+         <div class="carousel-caption">
+           <h3>Second slide label</h3>
+           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+         </div>
+       </ng-template>
+       <ng-template ngbSlide>
+         <img [src]="images[2]" width="100%" alt="Random third slide">
+         <div class="carousel-caption">
+           <h3>Third slide label</h3>
+           <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+         </div>
+       </ng-template>
+     </ngb-carousel>
+
+   </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+

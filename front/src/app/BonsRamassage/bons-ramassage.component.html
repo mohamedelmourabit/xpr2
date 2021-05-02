@@ -1,0 +1,508 @@
+
+
+<div class="app-page-title"><div class="page-title-wrapper">
+    <div class="page-title-heading"><div class="page-title-icon">
+        <i class="bg-mean-fruit icon icon-gradient pe-7s-box1"></i>
+    </div>
+        <div> Nouveau Bon de ramassage  <div class="page-title-subheading">
+        </div></div></div>
+    <div class="page-title-actions">
+        <button type="button" (click)="openLarge(content6)" class="btn-shadow d-inline-flex align-items-center btn btn-success"><fa-icon class="ng-fa-icon mr-2" ng-reflect-icon="[object Object]"><svg role="img" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></fa-icon> Nouveau Bon de ramassage</button></div></div>
+
+
+
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header">
+                Bon de ramassage
+            </div>
+            <div class="card-body">
+                <ul ngbNav #nav2="ngbNav" class="nav-tabs">
+                    <li ngbNavItem>
+                        <a ngbNavLink>Nouveau Bon de ramassage</a>
+                        <ng-template ngbNavContent>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-10">
+                                    <button type="button"
+                                            style="margin-left: 10px;"
+                                            class="btn btn-primary"
+                                            (click)="isFilterCollapsed = !isFilterCollapsed"
+                                            [attr.aria-expanded]="!isFilterCollapsed"
+                                            aria-controls="collapseExample">
+                                        <i class="pe-7s-filter"></i> Filtre
+                                    </button>
+                                    <div class="row mt-3" id="collapseExample"  [ngbCollapse]="isFilterCollapsed">
+                                        <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                <label for="filtredPage">Page</label>
+                                                <ng-select  id="filtredPage" [(ngModel)]="filtredPage" (change)="updatedFiltre('size',filtredPage)"  placeholder="Sélectionnez le nombre de Bon de ramassage">
+                                                    <ng-option *ngFor="let page of pages" [value]="page">{{page}}</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="filtredStatut">Statut</label>
+                                                <ng-select  id="filtredStatut" [(ngModel)]="filtredStatut.code" (change)="updatedFiltre('statut.code',filtredStatut.code)"  placeholder="Sélectionnez un statut">
+                                                    <ng-option *ngFor="let statut of statuts" [value]="statut.code">{{statut.libelle}}</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="periode" style="margin-bottom: 25px;">Période</label>
+                                                <input id="periode" type="text"  matInput placeholder="Sélectionnez une période"
+                                                       ngxDaterangepickerMd
+                                                       [locale]="{applyLabel: 'valider', format: 'DD/MM/YYYY'}"
+                                                       startKey="start"
+                                                       endKey="end"
+                                                       [(ngModel)]="selectedPeriode"
+
+                                                       name="daterange"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <mat-form-field >
+
+                                        <input type="text" style="margin-top: 10px"  matInput [(ngModel)]="filter" (keyup)="updatedFiltre('mc', $event.target?.value)" placeholder="Filter" >
+
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div *ngIf="!isLoading">
+                                <table mat-table (matSortChange)="sortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                                    <!-- Checkbox Column -->
+                                    <ng-container matColumnDef="select">
+                                        <th mat-header-cell *matHeaderCellDef >
+                                            <mat-checkbox  (change)="$event ? masterToggle() : null"
+                                                           [checked]="selection.hasValue() && isAllSelected()"
+                                                           [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                           [aria-label]="checkboxLabel()">
+                                            </mat-checkbox>
+                                        </th>
+                                        <td mat-cell *matCellDef="let row" width ="5%">
+                                            <mat-checkbox  (click)="$event.stopPropagation()"
+                                                           (change)="$event ? selection.toggle(row) : null"
+                                                           [checked]="selection.isSelected(row)"
+                                                           [aria-label]="checkboxLabel(row)">
+                                            </mat-checkbox>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="createdDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header width ="7%"> DATE </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="nom">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header width ="14%"> Id Bon </th>
+                                        <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="statut">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="14%"> STATUT </th>
+                                        <td mat-cell *matCellDef="let element"><div class="badge badge-primary" style="cursor: pointer" (click)="selectedBonRamassage(element,templateBonDeRamassage)"> <i class="pe-7s-look"></i> {{element.statut.libelle}}</div> </td>
+                                    </ng-container>
+
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="nbColis">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> NombreDeColis </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.nbColis}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="colisRamasse">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="7%"> Colis Ramassé </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.colisRamasse}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="colisExpedie">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> Colis Livré </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.colisExpedie}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="colisEnAttente">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> Colis en Attente </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.colisEnAttente}} </td>
+                                    </ng-container>
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="villeDestination.nom">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="8%"> Actions </th>
+                                        <td mat-cell *matCellDef="let element"> <button clas="btn btn-sm">Colis</button>  <button clas="btn btn-sm">Imprimer</button><button clas="btn btn-sm">Imprimer étiquette</button></td>
+                                    </ng-container>
+
+
+
+
+
+
+
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="outils">
+                                        <th mat-header-cell *matHeaderCellDef width ="7%"> OUTILS </th>
+
+                                        <td mat-cell *matCellDef="let element" >
+
+                                            <div class="d-inline-block" ngbDropdown>
+
+                                                <div class="font-icon-wrapper font-icon-sm" ngbDropdownToggle>
+
+                                                    <i class="pe-7s-menu icon-gradient bg-ripe-malin"></i>
+                                                </div>
+
+                                                <div ngbDropdownMenu>
+                                                    <button class="dropdown-item" (click)="showModalModifierBonDeRamassage(element,templateModifierBonDeRamassage)"><i class="fa fa-pencil"></i> Modifier</button>
+                                                    <button class="dropdown-item" (click)="showModalExpedieBonDeRamassage(element,templateExpedieBonDeRamassage)"><i class="fa fa-pencil"></i> Envoyer à Casa</button>
+                                                    <button class="dropdown-item" (click)="showModalDeleteBonRamassage(element,templateDeleteBonDeRamassage)"><i class="pe-7s-trash"></i> Supprimer</button>
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+
+
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                        (click)="selection.toggle(row)" >
+                                    </tr>
+                                </table>
+                                <mat-paginator #pagination
+                                               [length]="size "
+                                               [pageSize]="pageSize "
+                                               [pageSizeOptions]="pageSizeOptions "
+                                               (page)="onPaginateChange($event) ">
+                                </mat-paginator>
+                            </div>
+
+
+
+
+
+
+                        </ng-template>
+                    </li>
+
+
+                    <li ngbNavItem>
+                        <a ngbNavLink>Statistiques des Bon de ramassage</a>
+                        <ng-template ngbNavContent>Statistiques des Bon de ramassage</ng-template>
+                    </li>
+                </ul>
+
+
+
+                <div [ngbNavOutlet]="nav2"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<ng-template #content6 let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title" >Nouveau Bon de ramassage</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div *ngIf="errorForm"
+             class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </div>
+    <form #f="ngForm" (ngSubmit)="ajouterBonRamassage(f.value)">
+        <div class="modal-body">
+            <div style="overflow: auto;
+    display: flex;
+    flex-direction: column;">
+                <div class="card main-card mb-3">
+
+                    <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+
+                                        </div>
+                                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="d('Close click')">Annuler</button>
+            <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #templateBonDeRamassage let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <div class="font-icon-wrapper" style="font-size: 25px;"><i class="pe-7s-info"></i> Informations du Bon de ramassage # {{selectBonRamassage.nom}}</div>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+
+        <div *ngIf="!isLoading">
+            <table mat-table (matSortChange)="sortChange($event)" [dataSource]="dataSource2" class="mat-elevation-z8" matSort>
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef >
+                        <mat-checkbox  (change)="$event ? masterToggle() : null"
+                                       [checked]="selection.hasValue() && isAllSelected()"
+                                       [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                       [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row" width ="5%">
+                        <mat-checkbox  (click)="$event.stopPropagation()"
+                                       (change)="$event ? selection.toggle(row) : null"
+                                       [checked]="selection.isSelected(row)"
+                                       [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="createdDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width ="7%"> DATE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numCommande">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width ="14%"> N°commande </th>
+                    <td mat-cell *matCellDef="let element">{{element.numCommande}}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="statut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="14%"> STATUT </th>
+                    <td mat-cell *matCellDef="let element"><div class="badge badge-primary" style="cursor: pointer" (click)="selectedColis(element,templateColis)"> <i class="pe-7s-look"></i> {{element.statut.libelle}}</div> </td>
+                </ng-container>
+
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="idIntern">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="7%"> ID INTERN </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idIntern}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="destinataire">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> DESTINATAIRE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.destinataire}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="telephone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="10%"> TÉLÉPHONE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="villeDestination.nom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header  width ="8%"> VILLE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.villeDestination.nom}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="ligneColis[0].produit.nom">
+                    <th mat-header-cell *matHeaderCellDef  width ="10%"> Nom </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ligneColis[0].produit != undefined ? element.ligneColis[0].produit.nom : element.ligneColis[0].variante.produit.nom }} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="ligneColis[0].prix">
+                    <th mat-header-cell *matHeaderCellDef width ="7%"> Prix </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ligneColis[0].prix | currency:'DH':'symbol':undefined:'fr'}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsColis" ></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsColis;"
+                    (click)="selection.toggle(row)" >
+                </tr>
+            </table>
+            <mat-paginator #pagination
+                           [length]="size "
+                           [pageSize]="pageSize "
+                           [pageSizeOptions]="pageSizeOptions "
+                           (page)="onPaginateChange($event) ">
+            </mat-paginator>
+        </div>
+
+    </div>
+
+
+</ng-template>
+
+
+
+<ng-template #templateDeleteBonDeRamassage let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+
+        <div class="row">
+
+            <div class="col-md-12" style="font-size: 25px;"><i class="pe-7s-info"></i> Suppression du Bon de ramassage # {{currentBonRamassage.nom}} </div>
+        </div>
+
+
+
+
+
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div class="modal-body">
+        <div class="row" style="margin: 10px" *ngIf="errorDeleteForm">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    {{errorDeleteMessage}}
+                </div>
+            </div>
+        </div>
+
+        <p>Est-vous sure de vouloir supprimer le Bon de ramassage ? {{currentBonRamassage.nom}}</p>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  aria-label="Close"  (click)="d('Cross click')">Annuler</button>
+        <button class="button btn-warning pull-right" (click)="deleteBonRamassage(currentBonRamassage.nom,templateDeleteBonDeRamassage)"><i class="pe-7s-trash"></i> Supprimer</button>
+
+    </div>
+
+
+</ng-template>
+
+
+
+<ng-template #templateModifierBonDeRamassage let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" >Modification du Bon de ramassage # {{updatedBonRamassage.nom}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+
+    </div>
+    <form #f="ngForm" (ngSubmit)="modifierBonRamassage(f.value)">
+        <div class="modal-body">
+
+            <div *ngIf="errorUpdateForm"
+                 class="alert alert-danger">
+                {{errorUpdateMessage}}
+            </div>
+
+            <div class="card main-card mb-3">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="d('Cross click')">Annuler</button>
+            <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #templateExpedieBonDeRamassage let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" >Expedition du Bon de ramassage # {{updatedBonRamassage.nom}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+
+    </div>
+    <form #f="ngForm" (ngSubmit)="expedieBonRamassage(f.value)">
+        <div class="modal-body">
+
+            <div *ngIf="errorUpdateForm"
+                 class="alert alert-danger">
+                {{errorUpdateMessage}}
+            </div>
+
+            <div class="card main-card mb-3">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="d('Cross click')">Annuler</button>
+            <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
+</ng-template>
+
