@@ -13,6 +13,7 @@ import {DemandesComponent} from './Demandes/demandes.component';
 import {FacturesComponent} from './Factures/factures.component';
 import {LivreursComponent} from './livreurs/livreurs.component';
 import {BonExpeditionComponent} from './BonExpedition/bon-expedition.component';
+import { ClientsComponent } from './Clients/clients/clients.component';
 
 // DEMO PAGES
 
@@ -41,6 +42,7 @@ const routes: Routes = [
       {path: 'demandes', component: DemandesComponent, data: {extraParameter: 'elementsMenu'}},
       {path: 'factures', component: FacturesComponent, data: {extraParameter: 'elementsMenu'}},
       {path: 'livreurs', component: LivreursComponent, data: {extraParameter: 'elementsMenu'}},
+      {path: 'clients', component: ClientsComponent, data: {extraParameter: 'elementsMenu'}}
     ]
 
   },

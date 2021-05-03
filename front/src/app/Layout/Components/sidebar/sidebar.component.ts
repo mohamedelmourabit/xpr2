@@ -15,21 +15,21 @@ import {Autorisation} from '../../../Services/autorisation';
 export class SidebarComponent implements OnInit {
   public extraParameter: any;
 
-  showColis: boolean;
-  showBonRamassages: boolean;
-  showBonRetours: boolean;
-  showBonExpeditions: boolean;
-  showLivreurs: boolean;
-  showRamasseurs: boolean;
-  showFactures: boolean;
-  showFacturesClient: boolean;
-  showDemandes: boolean;
-  showUtilisateurs: boolean;
-  showNews: boolean;
-  showEntites: boolean;
-  showClient: boolean;
-  showContratClient: boolean;
-  showContratEntite: boolean;
+  showColis: boolean = false;
+  showBonRamassages: boolean = false;
+  showBonRetours: boolean = false;
+  showBonExpeditions: boolean = false;
+  showLivreurs: boolean = false;
+  showRamasseurs: boolean = false;
+  showFactures: boolean = false;
+  showFacturesClient: boolean = false;
+  showDemandes: boolean = false;
+  showUtilisateurs: boolean = false;
+  showNews: boolean = false;
+  showEntites: boolean = false;
+  showClient: boolean = false;
+  showContratClient: boolean = false;
+  showContratEntite: boolean = false;
 
   constructor(private autorisation: Autorisation,  private router: Router, private  authenticationService: AuthenticationService,
               public globals: ThemeOptions, private activatedRoute: ActivatedRoute) {
@@ -66,6 +66,7 @@ export class SidebarComponent implements OnInit {
     } else {
 
       if( this.authenticationService.isProfileSuperSuperAdmin() ){
+        
         this.showColis = true;
         this.showBonRamassages = true;
         this.showBonRetours = true;
@@ -93,7 +94,7 @@ export class SidebarComponent implements OnInit {
         this.showFactures = true;
         this.showFacturesClient = true;
         this.showDemandes = true;
-        this.showClient = true;
+        this.showClient = false;
         this.showUtilisateurs = true;
         this.showContratClient = true;
 

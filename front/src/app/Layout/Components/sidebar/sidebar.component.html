@@ -167,13 +167,16 @@
                     <span class="vsm-title">Mes entitès</span>
                   </button>
                 </ng-template>
+                </ngb-panel>
 
-                <ng-template ngbPanelHeader *ngIf="this.showClient">
-                  <button  class="vsm-link"  [routerLink]="['/clients']">
-                    <i class="vsm-icon pe-7s-users"></i>
-                    <span class="vsm-title">Mes clients</span>
-                  </button>
-                </ng-template>
+                <ngb-panel id="secondaireMenu7p">
+                  <ng-template ngbPanelHeader *ngIf="showClient">
+                    <button  class="vsm-link"  [routerLink]="['/clients']">
+                      <i class="vsm-icon pe-7s-users"></i>
+                      <span class="vsm-title">Mes clients</span>
+                    </button>
+                  </ng-template>
+                </ngb-panel> 
 
                 <ng-template ngbPanelHeader *ngIf="this.showUtilisateurs">
                   <button  class="vsm-link"  [routerLink]="['/nouveauCompte']">
@@ -188,8 +191,6 @@
                     <span class="vsm-title">News</span>
                   </button>
                 </ng-template>
-
-              </ngb-panel>
 
             </ngb-accordion>
 
