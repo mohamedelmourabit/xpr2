@@ -1,7 +1,12 @@
 
-*.ser
-
-back/.project
-/.metadata/
+.metadata/
 
 *.log
+
+*.class
+
+back/.project
+
+back/bin/
+
+back/target/classes/
