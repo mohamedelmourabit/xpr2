@@ -10,3 +10,11 @@ back/.project
 back/bin/
 
 back/target/classes/
+
+.DS_Store
+
+back/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+
+back/target/m2e-wtp/web-resources/META-INF/maven/com.xpr/Xpr/pom.properties
+
+back/target/m2e-wtp/web-resources/META-INF/maven/com.xpr/Xpr/pom.xml
