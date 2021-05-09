@@ -273,14 +273,26 @@ public class XprApplication implements CommandLineRunner {
 
 		
 
-		profileRepository.save(profileLivreur);
-
+		profileLivreur = profileRepository.save(profileLivreur);
+		
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("COLIS-REST$LIST$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("COLIS-REST$UPDATE$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("BON-RETOUR-REST$CREATE$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("BON-RETOUR-REST$UPDATE$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("BON-RETOUR-REST$LIST$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("FACTURE-REST$LIST$OWN"));
+		profileLivreur.getAutorisations().add(this.autorisationRepository.findByAuthName("FACTURE-REST$LIST$OWN"));
+		
 		Profile profileRamasseur = new Profile();
 		profileRamasseur.setPrflName("Ramasseur");
 				profileRepository.save(profileRamasseur);
 
 		profileRamasseur = profileRepository.save(profileRamasseur);
+		
+		profileRamasseur.getAutorisations().add(this.autorisationRepository.findByAuthName("BON-RAMASSAGE-REST$LIST$OWN"));
+		profileRamasseur.getAutorisations().add(this.autorisationRepository.findByAuthName("BON-RAMASSAGE-REST$UPDATE$OWN"));
 
+	
 		Utilisateur utilisateurXpr = new Utilisateur();
 		utilisateurXpr.setCni("managerXPR@xpr.com");
 		utilisateurXpr.setNom("userXpr1");
