@@ -42,11 +42,12 @@ public class Autorisation extends XprBaseModel  implements Serializable {
 	
 	
 
-	public Autorisation(Object object, String authorisationName) {
+	public Autorisation(String authorisationName) {
 		this.authName=authorisationName;
 	}
-
-
+	public Autorisation(long id) {
+		this.id=id;
+	}
 
 	
 

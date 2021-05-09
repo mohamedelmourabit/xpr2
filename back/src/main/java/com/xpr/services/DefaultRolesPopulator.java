@@ -46,7 +46,7 @@ public class DefaultRolesPopulator implements RolesPopulator {
         final String[] actions = {"CREATE", "UPDATE", "DELETE", "LIST", "LISTSELECT"};
         
         final String[] relationsLivreur = {"LIVREUR"};
-        final String[] actions2 = { "UPDATE","LIST", "LISTSELECT"};
+        final String[] actionsLR = { "CREATE","UPDATE","LIST", "LISTSELECT"};
         
         final String[] relationsRamasseur = {"RAMASSEUR"};
 
@@ -88,7 +88,7 @@ public class DefaultRolesPopulator implements RolesPopulator {
 	            }
 	            
 	            if(controller.equals("colisRest") || controller.equals("factureRest") || controller.equals("bonRetourRest")  ) {
-	            	for (String action : actions2) {
+	            	for (String action : actionsLR) {
 		                for(String relation : relationsLivreur) {
 		                	
 		                
@@ -106,7 +106,7 @@ public class DefaultRolesPopulator implements RolesPopulator {
 	            }
 	            
 	            if(controller.equals("bonRamassageRest") ) {
-	            	for (String action : actions2) {
+	            	for (String action : actionsLR) {
 		                for(String relation : relationsRamasseur) {
 		                	
 		                

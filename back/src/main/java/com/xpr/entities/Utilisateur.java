@@ -1,6 +1,5 @@
 package com.xpr.entities;
 
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,57 +16,51 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.xpr.dao.core.view.ModelViews;
 
-
 @Entity
 public class Utilisateur implements Serializable {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@JsonView(ModelViews.SelectView.class)
 	private String email;
-	
+
 	@JsonView(ModelViews.SelectView.class)
 	private String cni;
-	
+
 	@JsonIgnore
 	private String password;
-	
+
 	@JsonView(ModelViews.SelectView.class)
 	private String nom;
-	
+
 	@JsonView(ModelViews.SelectView.class)
 	private String prenom;
-	
+
 	@JsonView(ModelViews.SelectView.class)
 	private String telephone;
-	
+
 	@ManyToOne
 	@JsonView(ModelViews.SelectView.class)
 	private Entite entite;
-	
+
 	@ManyToOne
 	private Client client;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "utilisateurs_profiles",
-			joinColumns = @JoinColumn(
-					name = "Utilisateurs_email", referencedColumnName = "email"),
-			inverseJoinColumns = @JoinColumn(
-					name = "profile_id", referencedColumnName = "id"))
+	@JoinTable(name = "utilisateurs_profiles", joinColumns = @JoinColumn(name = "Utilisateurs_email", referencedColumnName = "email"), inverseJoinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "id"))
 	@JsonView(ModelViews.ListView.class)
-	@JsonIgnoreProperties({"autorisations"})
+	@JsonIgnoreProperties({ "autorisations" })
 	private Set<Profile> profiles = new HashSet<>();
-	
-	
+
 	private boolean disabled;
-	
+
 	@JsonView(ModelViews.SelectView.class)
 	protected String typeUtilisateur;
-	
-	
-	
-	
-		
+
 	public Utilisateur(String email) {
 		super();
 		this.email = email;
@@ -79,22 +72,19 @@ public class Utilisateur implements Serializable {
 		this.password = password;
 	}
 
-		
-	
-	
 	public Utilisateur() {
-		this.typeUtilisateur="Utilisateur";
+		this.typeUtilisateur = "Utilisateur";
 	}
 
 	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
+
 	@JsonSetter
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public String getEmail() {
 		return email;
@@ -119,7 +109,6 @@ public class Utilisateur implements Serializable {
 	public void setCni(String cni) {
 		this.cni = cni;
 	}
-
 
 	public String getTypeUtilisateur() {
 		return typeUtilisateur;
@@ -161,7 +150,6 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 	}
 
-	
 	public Entite getEntite() {
 		return entite;
 	}
@@ -177,12 +165,5 @@ public class Utilisateur implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
-	
-
-	
-	
-	
-	
 
 }
