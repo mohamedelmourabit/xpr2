@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,7 +61,7 @@ public class AccountServiceImp implements AccountService, UserDetailsService {
 
 	@Override
 	public Autorisation saveAuthorisation(String authorisationName) {
-		return authRepository.save(new Autorisation(null,authorisationName));
+		return authRepository.save(new Autorisation(authorisationName));
 	}
 
 	
@@ -185,7 +184,7 @@ public class AccountServiceImp implements AccountService, UserDetailsService {
 		Collection<? extends GrantedAuthority> authorities = this.userAuthorityService.getGrantedAuthorities(username);
 		
 		
-		return new User(user.getCni(),user.getPassword(),authorities);
+		return new User(user.getEmail(),user.getPassword(),authorities);
 		
 	}
 	

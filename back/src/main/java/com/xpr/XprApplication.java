@@ -259,9 +259,14 @@ public class XprApplication implements CommandLineRunner {
 
 		Profile profileManager = new Profile();
 		profileManager.setPrflName("Manager");
+	
 		
 
 		profileManager = profileRepository.save(profileManager);
+		
+		profileManager.setAutorisations(new HashSet<>());
+		profileManager.getAutorisations().add(new Autorisation(1));
+		
 
 		Profile profileLivreur = new Profile();
 		profileLivreur.setPrflName("Livreur");
@@ -277,7 +282,7 @@ public class XprApplication implements CommandLineRunner {
 		profileRamasseur = profileRepository.save(profileRamasseur);
 
 		Utilisateur utilisateurXpr = new Utilisateur();
-		utilisateurXpr.setCni("cniUserXpr11");
+		utilisateurXpr.setCni("managerXPR@xpr.com");
 		utilisateurXpr.setNom("userXpr1");
 		utilisateurXpr.setPassword(new BCryptPasswordEncoder().encode("123456"));
 		utilisateurXpr.setEmail("managerXPR@xpr.com");
@@ -310,6 +315,7 @@ public class XprApplication implements CommandLineRunner {
 		uc.setClient(client);
 		uc.setEntite(XPR);
 		uc = utilisateurRepository.save(uc);
+	
 		uc.getProfiles().add(clientProfile);
 
 		Contrat c = new Contrat();
