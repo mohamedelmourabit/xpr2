@@ -7,8 +7,8 @@ gantt
     axisFormat  %d/%m
     
     section XRP
-    Livraison Avrils    : done, 23/03/2021, 1d
-    MEP Avril s          : 29/04/2021, 1d
+    Livraison Avrils    : done, 23/03/2022, 1d
+    MEP Avril s          : 29/04/2022, 1d
     Livraison PSR (Optimisation)    : done, 29/03/2021, 1d
     PSRs (Optimisation)              : 04/04/2021, 3d
     %% release/s :
