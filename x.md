@@ -6,7 +6,7 @@ gantt
     dateFormat  DD/MM/YYYY
     axisFormat  %d/%m
     
-    section Q4X
+    section XRP
     Livraison Avrils    : done, 23/03/2021, 1d
     MEP Avril s          : 29/04/2021, 1d
     Livraison PSR (Optimisation)    : done, 29/03/2021, 1d
