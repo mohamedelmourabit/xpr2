@@ -13,11 +13,15 @@ export class ClientService{
 
   ajouterClient(client: Client){
 
-    return this.http.post(this.host + '/clients', client,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
+    return this.http.post(this.host + '/clients/saveClient', client,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
   }
 
   getClient(ice: string){
-    return this.http.get(this.host + '/clients/' + ice,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
+    return this.http.get(this.host + '/client/clients/?ice=' + ice,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
+  }
+
+  getClients(ice: string){
+    return this.http.get(this.host + '/client/clients/' + ice,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
   }
 
   modifierClient(client: Client){

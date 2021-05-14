@@ -5,13 +5,15 @@ import {host} from './host';
 import * as SecureLS from 'secure-ls';
 import {Utilisateur} from '../models/model.utilisateur';
 import {Client} from '../models/model.client';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 
 
 @Injectable()
 export class AuthenticationService {
 
-
+  public currentUser: Observable<Utilisateur>;
   private host = host;
 
   /*private ls = new SecureLS({
@@ -21,7 +23,7 @@ export class AuthenticationService {
   private jwtToken = null;
   private roles: Array<any>;
   private profiles: Array<any>;
-  private rolesParsed: Array<string> = [];
+  private rolesParsed: Array<any> = [];
   private profilesParsed: Array<string> = [];
   private imgProfil: string;
   private name: string;
@@ -115,10 +117,6 @@ export class AuthenticationService {
     this.ls.set('roles', JSON.stringify(this.rolesParsed));
 
     this.ls.set('connected', true);
-  }
-
-  getUser(username: string) {
-    return this.http.get(this.host + '/getUser?username=' + username, {headers: new HttpHeaders({Authorization: this.getToken()})});
   }
 
   loadToken() {
@@ -285,8 +283,24 @@ export class AuthenticationService {
     }
 
     let res = false;
-    res = this.rolesParsed.find(a => a.includes (autorisation)) !== '' ?  true : false;
-    return res;
+    //if(this.rolesParsed.indexOf(autorisation) > -1)
+    console.warn('roles parses');
+    console.log(this.rolesParsed);
+    const result = this.rolesParsed.find( ({ authority }) => authority === autorisation );
+    return result;
+  }
+  isContainAutorisationIN(autorisation: string) {
+
+    if (this.rolesParsed == null) {
+      this.loadRoles();
+    }
+
+    let res = false;
+    //if(this.rolesParsed.indexOf(autorisation) > -1)
+    console.warn('roles parses');
+    console.log(this.rolesParsed);
+    const result = this.rolesParsed.find( ({ authority }) => authority.indexOf(autorisation) > -1 );
+    return result;
   }
 
   isContainProfile(profile: string) {
@@ -362,5 +376,26 @@ export class AuthenticationService {
   saveTask(task) {
     console.log(task);
     return this.http.post(this.host + '/tasks', task, {headers: new HttpHeaders({ Authorization : this.jwtToken})});
+  }
+
+  isEnableLIST(key : string){
+    if(this.isContainAutorisationIN(key.toUpperCase+"-REST") ){
+        return true;
+    }
+  }
+  isEnableCREATED(key : string){
+    if(this.isContainAutorisationIN(key.toUpperCase+"-REST$-CREATE") ){
+        return true;
+    }
+  }
+  isEnableUPDATE(key : string){
+    if(this.isContainAutorisationIN(key.toUpperCase+"-REST$-UPDATE") ){
+        return true;
+    }
+  }
+  isEnableDELETE(key : string){
+    if(this.isContainAutorisationIN(key.toUpperCase+"-REST$-DELETE") ){
+        return true;
+    }
   }
 }

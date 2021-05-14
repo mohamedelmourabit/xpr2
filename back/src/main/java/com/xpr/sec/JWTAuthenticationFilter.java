@@ -64,8 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		return encoder;
 	}
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+	@Override	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
 		String encodedString = Base64.getEncoder().encodeToString(SecurityConstants.SECRET.getBytes());
@@ -80,10 +79,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			accountService = webApplicationContext.getBean(AccountService.class);
 		}
 
-		Utilisateur user = utilisateurRepository.findByCni(authResult.getName());
-		if (user != null) {
-
-			Utilisateur u = utilisateurRepository.findUserWithAuthorisationsByUsername(user.getEmail());
+			Utilisateur u = utilisateurRepository.findUserWithAuthorisationsByUsername(authResult.getName());
 
 			List<String> profiles = new ArrayList<String>();
 
@@ -106,9 +102,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			System.out.println("jwt " + jwt);
 			response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + jwt);
 			System.out.println("successful");
-		} else {
+		} 
 
-		}
-
-	}
 }

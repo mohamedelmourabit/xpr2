@@ -1,5 +1,6 @@
 package com.xpr.web;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.xpr.dao.core.controller.SecuredCRUDController;
 import com.xpr.entities.Client;
 import com.xpr.exceptions.ClientException;
 import com.xpr.services.ClientService;
 
 @RestController
 @RequestMapping(path="/client")
-public class ClientRestController {
+public class ClientRestController extends SecuredCRUDController<Client, String>{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientRestController.class);
 	
@@ -48,8 +51,14 @@ public class ClientRestController {
 	}
 	
 	@PostMapping(value="/clients")
-	public Client saveClient(@RequestBody Client bl) {
-		return clientService.saveClient(bl);
+	public Client saveClient(@RequestBody Client bl) throws AccessDeniedException {
+		
+		if(checkEligibility()) {
+			return clientService.saveClient(bl);
+		} else {
+			throw new AccessDeniedException("Unauthorized operation");
+		}
+		
 	}
 	
 	@RequestMapping(value="/clients/{ice}",method=RequestMethod.DELETE)
@@ -61,5 +70,11 @@ public class ClientRestController {
 	@RequestMapping(value="/chercherClients",method=RequestMethod.GET)
 	public Page<Client> chercherClient(@RequestParam(name="mc",defaultValue="") String mc,@RequestParam(name="page",defaultValue="0")int page,@RequestParam(name="size",defaultValue="5")int size) {
 		return clientService.findAllClientByMc(mc, page, size);
+	}
+
+	@Override
+	public void setIdentifier(String id, Client object) {
+		object.setIce(id);
+		
 	}
 }
