@@ -302,7 +302,7 @@ export class ColisComponent implements  OnInit, AfterViewInit {
 
     console.log('colisForm ' + JSON.stringify(colisFormulaire));
 
-    const colis = new Colis();
+    let colis = new Colis();
     colis.creerPar = this.authenticationService.getCurrentUtilisateur();
     colis.adresse = colisFormulaire.addresse;
     colis.remarque = colisFormulaire.remarque;
@@ -317,7 +317,7 @@ export class ColisComponent implements  OnInit, AfterViewInit {
     v.nom= this.selectedVille;
     colis.villeDestination = v;
 
-    const lc = new LigneColis();
+    let lc = new LigneColis();
 
     const produit = new Produit();
     produit.nom = colisFormulaire.produit;
