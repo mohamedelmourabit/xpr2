@@ -19,27 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.xpr.dao.BonRamassageRepository;
-import com.xpr.dao.ColisRepository;
 import com.xpr.dao.StatutBonRamassageRepositoy;
 import com.xpr.dao.annotation.XprRole;
 import com.xpr.dao.core.controller.SecuredCRUDController;
 import com.xpr.dao.helper.CustomJPARepository;
 import com.xpr.dao.specification.BonRamassageSpecification;
-import com.xpr.dao.specification.ColisSpecification;
 import com.xpr.dto.BonRamassageSearch;
-import com.xpr.dto.ColisSearch;
 import com.xpr.entities.BonRamassage;
-import com.xpr.entities.Client;
 import com.xpr.entities.Colis;
-import com.xpr.entities.Entite;
 import com.xpr.entities.Historique;
-import com.xpr.entities.Livreur;
 import com.xpr.entities.StatutBonRamassage;
-import com.xpr.entities.StatutColis;
 import com.xpr.entities.Utilisateur;
-import com.xpr.entities.Ville;
 import com.xpr.exceptions.BonRamassageException;
 import com.xpr.services.BonRamassageService;
 

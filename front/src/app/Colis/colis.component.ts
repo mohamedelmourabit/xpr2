@@ -142,14 +142,9 @@ export class ColisComponent implements  OnInit, AfterViewInit {
                 this.ref.detectChanges();
             });
 
-
-
-
-
     }
 
     ngAfterViewInit() {
-
         this.dataSource.paginator = this.paginator;
     }
 

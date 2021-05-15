@@ -56,7 +56,7 @@ public abstract class SecuredCRUDController<T, V extends Serializable> {
     
     public CustomJPARepository<T, V> repository;
 
-    public static final int DEFAULT_PAGE_SIZE = 25;
+    public static final int DEFAULT_PAGE_SIZE = 10;
     public static final String DEFAULT_SORT_COLUMN = "createdDate";
     public static final String DEFAULT_SORT_ORDER = "DESC";
     @Autowired

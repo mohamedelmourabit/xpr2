@@ -614,23 +614,26 @@ public class XprApplication implements CommandLineRunner {
 			br.getColis().add(colis1);
 			colis1.setStatut(statutColisEnAttenteRamassage);
 			colis1.setDateRamassage(new Date());
-			colis1 = colisRepository.save(colis1);
+			
 			HistoriqueBonRamassage h1 = new HistoriqueBonRamassage();
 			h1.setAction("creer nouveau br");
-			h1.setBonRamassage(br);
+			
 			h1.setUtilisateur(uc);
 			h1.setStatut(br.getStatut().getLibelle());
 			h1.setDateCreation(new Date());
-
+	
 			br.setRamasseur(ramasseur1);
 			br.setAgence(agenceFes);
 			br.setHistoriques(new HashSet<HistoriqueBonRamassage>());
 			br.getHistoriques().add(h1); // livreur envoi colis vers agence ?
-
+	
 			br = bonRamassageRepository.save(br);
+			h1.setBonRamassage(br);
+			colis1.setBonRamassage(br);
+			colis1 = colisRepository.save(colis1);
 			System.out.println("br " + br.getNom());
-			historiqueRepository.save(h);
-
+			historiqueRepository.save(h1);
+	
 			// ramassage par le livreur depot sur agenceFES et envoi vers Casa
 
 			br.setStatut(statutBonRamassageRamasse);
@@ -641,7 +644,7 @@ public class XprApplication implements CommandLineRunner {
 			h2.setUtilisateur(utilisateurXpr);
 			h2.setStatut(br.getStatut().getLibelle());
 			h2.setDateCreation(new Date());
-
+	
 			br.getHistoriques().add(h2);
 			br = bonRamassageRepository.save(br);
 			historiqueRepository.save(h);
