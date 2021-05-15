@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xpr.dao.annotation.XprRole;
 import com.xpr.dao.core.controller.SecuredCRUDController;
 import com.xpr.entities.Client;
 import com.xpr.exceptions.ClientException;
@@ -50,7 +51,8 @@ public class ClientRestController extends SecuredCRUDController<Client, String>{
 		return clientService.updateClient(ice, c);
 	}
 	
-	@PostMapping(value="/clients")
+	@PostMapping(value="/saveClient")
+	@XprRole(role = XprRole.Role.CREATE, view= "ModelViews.FullView")
 	public Client saveClient(@RequestBody Client bl) throws AccessDeniedException {
 		
 		if(checkEligibility()) {

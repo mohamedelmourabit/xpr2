@@ -1,0 +1,7 @@
+<div> 
+    <app-add-client></app-add-client>
+</div>
+<div *ngIf="!loading"> 
+    <app-list-client [clients]="clients"></app-list-client>
+</div>
+

@@ -96,7 +96,8 @@ import {Autorisation} from './Services/autorisation';
 import localeFr from '@angular/common/locales/fr';
 import {NgxMatDrpModule} from 'ngx-mat-daterange-picker';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
-import { ClientsComponent } from './Clients/clients/clients.component';
+import { ClientModule } from './client/client.module';
+import { ClientComponent } from './client/client.component';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -146,9 +147,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FacturesComponent,
     LivreursComponent,
     DemandesComponent,
-    BonExpeditionComponent,
-    ClientsComponent
-
+    BonExpeditionComponent
 
   ],
   imports: [
@@ -181,7 +180,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     ChartsModule,
     NgSelectModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    ClientModule
   ],
   providers: [
     {
