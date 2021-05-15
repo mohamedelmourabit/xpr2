@@ -284,6 +284,8 @@ export class ColisComponent implements  OnInit, AfterViewInit {
               this.isLoading = false;
               this.dataSource = new MatTableDataSource<Colis>(this.coliss);
               this.dataSource.sort = this.sort;
+              console.warn('dataSource');
+              console.log(this.dataSource);
               this.ref.detectChanges();
               this.errorForm = false;
               this.errorMessage = '';

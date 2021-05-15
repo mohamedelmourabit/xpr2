@@ -13,7 +13,7 @@ export class ClientService{
 
   ajouterClient(client: Client){
 
-    return this.http.post(this.host + '/clients/saveClient', client,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
+    return this.http.post(this.host + '/client/saveClient', client,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
   }
 
   getClient(ice: string){

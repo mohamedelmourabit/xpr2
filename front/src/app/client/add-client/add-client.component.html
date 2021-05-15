@@ -1,3 +1,4 @@
+
 <div class="app-page-title"><div class="page-title-wrapper">
     <div class="page-title-heading"><div class="page-title-icon">
         <i class="bg-mean-fruit icon icon-gradient pe-7s-box1"></i>
@@ -5,16 +6,16 @@
         <div> Nouveau Client  <div class="page-title-subheading">
         </div></div></div>
     <div class="page-title-actions">
-       <button type="button" (click)="openLarge(creerClient)" 
+       <button type="button" (click)="openLarge(openModal)" 
        class="btn-shadow d-inline-flex align-items-center btn btn-success">
        <fa-icon class="ng-fa-icon mr-2" ng-reflect-icon="[object Object]">
-           <svg role="img" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></fa-icon> Nouveau Client</button></div></div>
-
+           <svg role="img" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></fa-icon> 
+           Nouveau Client</button></div></div>
 
 </div>
 
 
-<ng-template #creerClient let-c="close" let-d="dismiss">
+<ng-template #openModal let-c="close" let-d="dismiss">
 
     <div class="modal-header">
         <h4 class="modal-title" >Nouveau Client</h4>
@@ -46,6 +47,11 @@
                                     <input id="destinataire" name="nom" ngModel type="text" class="mb-2 form-control-sm form-control" required>
                                 </div>
 
+                                <div class="position-relative form-group"><label for="ice"><i class="pe-7s-user"></i> ICE</label>
+                                    <input id="destinataire" name="ice" ngModel type="text" class="mb-2 form-control-sm form-control" required>
+                                </div>
+
+
                                 <div class="position-relative form-group"><label for="contact"><i class="pe-7s-user"></i> Contact</label>
                                     <input id="destinataire" name="contact" ngModel type="text" class="mb-2 form-control-sm form-control" required>
                                 </div>
@@ -76,24 +82,6 @@
                             </div>
                         </ng-template>
                     </li>
-                    <!--
-                    
-                    <li ngbNavItem>
-                        <a ngbNavLink><i class="fa fa-file-excel-o"></i> Importer d'un excel</a>
-                        <ng-template ngbNavContent>
-
-
-                                <div class="position-relative form-group"><label for="file">File</label>
-                                    <input  id="file" type="file" name="file" class="form-control-file">
-                                    <p>Remarque : Veuillez accepter la forme d'excel suivante (FORMAT XLSX Seulement) : <a target="_blank" href="./../assets/format.xlsx" >Format</a> pour importer vos colis</p>
-                                </div>
-
-
-
-                        </ng-template>
-
-
-                    </li>-->
                 </ul> 
                 <div [ngbNavOutlet]="nav3"></div>
             </div>
@@ -107,3 +95,4 @@
     </div>
     </form>
 </ng-template>
+
