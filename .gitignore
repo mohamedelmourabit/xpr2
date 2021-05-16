@@ -22,3 +22,7 @@ back/target/m2e-wtp/web-resources/META-INF/maven/com.xpr/Xpr/pom.xml
 front/node_modules/
 
 front/.idea/workspace.xml
+
+back/src/main/resources/application.properties
+
+front/package-lock.json

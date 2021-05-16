@@ -1,0 +1,145 @@
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="bg-mean-fruit icon icon-gradient pe-7s-box1"></i>
+            </div>
+            <div> Nouveau Colis <div class="page-title-subheading">
+                </div>
+            </div>
+        </div>
+        <div class="page-title-actions">
+            <button type="button" (click)="openLarge(content6)"
+                class="btn-shadow d-inline-flex align-items-center btn btn-success">
+                <fa-icon class="ng-fa-icon mr-2" ng-reflect-icon="[object Object]"><svg role="img" aria-hidden="true"
+                        focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="currentColor"
+                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
+                        </path>
+                    </svg></fa-icon> Nouveau Colis
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #content6 let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Nouveau Colis</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div *ngIf="errorForm" class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </div>
+    <form #f="ngForm" (ngSubmit)="ajouterColis(f.value)">
+        <div class="modal-body">
+            <div style="overflow: auto;
+    display: flex;
+    flex-direction: column;">
+                <div class="card main-card mb-3">
+
+                    <div class="card-body">
+                        <ul ngbNav #nav3="ngbNav" class="nav-tabs">
+                            <li ngbNavItem>
+                                <a ngbNavLink><i class="pe-7s-box2"></i> Insérer Manuellement</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="position-relative form-group"><label for="destinataire"><i
+                                                        class="pe-7s-user"></i> DESTINATAIRE</label>
+                                                <input id="destinataire" name="destinataire" ngModel type="text"
+                                                    class="mb-2 form-control-sm form-control" required>
+                                            </div>
+                                            <div class="position-relative form-group"><label for="telephone"><i
+                                                        class="pe-7s-phone"></i> TELEPHONE</label>
+                                                <input id="telephone" name="telephone" type="text" ngModel
+                                                    class="mb-2 form-control-sm form-control" required>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="prix"><i
+                                                        class="fa fa-money"></i> PRIX</label>
+                                                <input id="prix" name="prix" type="number" ngModel
+                                                    class="mb-2 form-control-sm form-control" required>
+                                            </div>
+
+                                            <div class="position-relative form-group">
+                                                <label for="ville"><i class="fa fa-map-marker"></i> VILLE</label>
+                                                <ng-select id="ville" name="ville" [(ngModel)]="selectedVille">
+                                                    <ng-option *ngFor="let ville of villes" [value]="ville.nom">
+                                                        {{ville.nom}}</ng-option>
+                                                </ng-select>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="produit"><i
+                                                        class="fa fa-shopping-cart"></i> PRODUIT</label>
+                                                <input id="produit" name="produit" ngModel type="text"
+                                                    class="mb-2 form-control-sm form-control" required>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="idIntern"><i
+                                                        class="fa fa-font-awesome"></i> ID-INTERN</label>
+                                                <input id="idIntern" name="idIntern" ngModel type="text"
+                                                    class="mb-2 form-control-sm form-control" required>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="addresse"><i
+                                                        class="fa fa-home"></i> Address</label>
+                                                <textarea id="addresse" name="addresse" ngModel
+                                                    class="mb-2 form-control-sm form-control" required></textarea>
+                                            </div>
+
+                                            <div class="position-relative form-group"><label for="remarque"><i
+                                                        class="fa fa-comment"></i> Remarque</label>
+                                                <textarea id="remarque" name="remarque" ngModel ngModeltype="text"
+                                                    class="mb-2 form-control-sm form-control"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </ng-template>
+
+
+                            </li>
+
+
+
+                            <li ngbNavItem>
+                                <a ngbNavLink><i class="fa fa-file-excel-o"></i> Importer d'un excel</a>
+                                <ng-template ngbNavContent>
+
+
+                                    <div class="position-relative form-group"><label for="file">File</label>
+                                        <input id="file" type="file" name="file" class="form-control-file">
+                                        <p>Remarque : Veuillez accepter la forme d'excel suivante (FORMAT XLSX
+                                            Seulement) : <a target="_blank" href="./../assets/format.xlsx">Format</a>
+                                            pour importer vos colis</p>
+                                    </div>
+
+
+
+                                </ng-template>
+
+
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="nav3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="d('Close click')">Annuler</button>
+            <button type="button" type="submit" [disabled]="!f.valid" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
+</ng-template>
+

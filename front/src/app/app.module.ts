@@ -30,12 +30,6 @@ import {PageTitleComponent} from './Layout/Components/page-title/page-title.comp
 // HEADER
 
 // SIDEBAR
-
-
-
-
-
-
 import {ForgotPasswordBoxedComponent} from './UserPages/forgot-password-boxed/forgot-password-boxed.component';
 import {LoginBoxedComponent} from './UserPages/login-boxed/login-boxed.component';
 import {RegisterBoxedComponent} from './UserPages/register-boxed/register-boxed.component';
@@ -98,6 +92,8 @@ import {NgxMatDrpModule} from 'ngx-mat-daterange-picker';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import { ClientModule } from './client/client.module';
 import { ClientComponent } from './client/client.component';
+import { AddColisComponent } from './Colis/add-colis/add-colis.component';
+import { ListColisComponent } from './Colis/list-colis/list-colis.component';
 import { SharedModule } from './shared/shared.module';
 
 
@@ -148,7 +144,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FacturesComponent,
     LivreursComponent,
     DemandesComponent,
-    BonExpeditionComponent
+    BonExpeditionComponent,
+    AddColisComponent,
+    ListColisComponent
 
   ],
   imports: [

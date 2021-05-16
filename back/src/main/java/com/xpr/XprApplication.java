@@ -72,8 +72,6 @@ import com.xpr.services.RolesPopulator;
 import com.xpr.services.StartupEntry;
 import com.xpr.utils.Constants;
 
-import jdk.internal.net.http.common.Log;
-
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = CustomJPARepositoryImpl.class)
 public class XprApplication implements CommandLineRunner {
