@@ -14,10 +14,10 @@ table {
   display: block;
 }
 
-
-
-
-
+.mat-checkbox-inner-container {
+  height: auto !important;
+  width:  auto !important;
+  }
 
 tr.mat-header-row {
   height: 25px;

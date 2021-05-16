@@ -1,4 +1,91 @@
-<div>
-    <p>works</p>
-    
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header">
+                Clients
+            </div>
+            <!--FILTER -->
+            <div class="card-body">
+                <div ngbNav #nav2="ngbNav" class="nav-tabs">
+                    <div ngbNavItem>
+                        <ng-template ngbNavContent>
+                            <div>
+                                <!-- TABLEAU DE CLIENTS-->
+                                <table mat-table (matSortChange)="sortChange($event)" [dataSource]="dataSource"
+                                class="mat-elevation-z8" matSort>
+
+
+                                 <!-- Checkbox Column -->
+                                 <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef with = "5%">
+                                        <mat-checkbox  (change)="$event ? masterToggle() : null"
+                                                      [checked]="selection.hasValue() && isAllSelected()"
+                                                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                      [aria-label]="checkboxLabel()">
+                                        </mat-checkbox>
+                                    </th>
+                                    <td mat-cell *matCellDef="let row" width ="5%">
+                                        <mat-checkbox  (click)="$event.stopPropagation()"
+                                                      (change)="$event ? selection.toggle(row) : null"
+                                                      [checked]="selection.isSelected(row)"
+                                                      [aria-label]="checkboxLabel(row)">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="createdDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="7%"> DATE </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.createdDate |
+                                        date:'dd/MM/yyyy'}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="nom">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Nom </th>
+                                    <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ice">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Ice </th>
+                                    <td mat-cell *matCellDef="let element">{{element.ice}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="contact">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Contact </th>
+                                    <td mat-cell *matCellDef="let element">{{element.contact}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="telephone">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Telephone </th>
+                                    <td mat-cell *matCellDef="let element">{{element.telephone}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="typeClient">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Type  </th>
+                                    <td mat-cell *matCellDef="let element">{{element.typeClient}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ville">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Ville  </th>
+                                    <td mat-cell *matCellDef="let element">{{element.ville}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="contrat">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="14%"> Contrat </th>
+                                    <td mat-cell *matCellDef="let element">{{element.contrat}}</td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                        (click)="selection.toggle(row)">
+                                    </tr>
+
+                                </table>
+                                
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div [ngbNavOutlet]="nav2"></div>
+            </div>
+        </div>
+    </div>
 </div>

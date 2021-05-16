@@ -19,7 +19,7 @@ import { Ville } from 'src/app/models/model.ville';
 })
 export class ListClientComponent implements OnInit {
 
-  @Input() clients:  Client[];
+  @Input() clients: Client[];
   isLoading = true;
   public isFilterCollapsed = true;
   filtredVille: Ville = new Ville();
@@ -51,22 +51,22 @@ export class ListClientComponent implements OnInit {
 
   currentColisCommentaire: Array<Commentaire>;
 
-showColis: boolean;
-writeColis: boolean;
+  showColis: boolean;
+  writeColis: boolean;
 
-villes = new Array<Ville>();
+  villes = new Array<Ville>();
 
-selectedVille: any;
+  selectedVille: any;
 
-coliss = new Array<Colis>();
+  coliss = new Array<Colis>();
 
-mode: number;
+  mode: number;
 
-size: number;
+  size: number;
 
-pageSize: number;
+  pageSize: number;
 
-filter: string;
+  filter: string;
 
   selectedVilleUpdate: Ville;
 
@@ -79,23 +79,24 @@ filter: string;
 
   selectColis: Colis;
 
-  selectedPeriode: {start: any, end: any};
+  selectedPeriode: { start: any, end: any };
 
-displayedColumns: string[] = ['select', 'createdDate', 'numCommande',	'statut', 'codeEnvoi',	'idIntern', 'destinataire',
-  'telephone', 'villeDestination.nom', 'ligneColis[0].prix', 'ligneColis[0].produit.nom', 'outils'];
+  displayedColumns: string[] = ['select', 'createdDate', 'nom', 'ice', 'contact', 'telephone', 'typeClient', 'ville', 'contrat'];
 
-  params = {  };
+  params = {};
 
-dataSource = new MatTableDataSource<Client>();
-selection = new SelectionModel<Colis>(true, []);
-  @ViewChild('pagination', {static: true}) paginator: MatPaginator;
+  dataSource = new MatTableDataSource<Client>();
+  selection = new SelectionModel<Client>(true, []);
+  @ViewChild('pagination', { static: true }) paginator: MatPaginator;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() { }
 
   ngOnInit(): void {
 
+    console.warn("this.clients");
+    console.log(this.clients);
     this.dataSource = new MatTableDataSource<Client>(this.clients);
     console.warn('clients recu');
     console.log(this.clients);
@@ -104,20 +105,38 @@ selection = new SelectionModel<Colis>(true, []);
 
   @HostListener('matSortChange', ['$event'])
   sortChange(e) {
-      // save cookie with table sort data here
-      console.log('Sort' + JSON.stringify(e));
+    // save cookie with table sort data here
+    console.log('Sort' + JSON.stringify(e));
 
-      if (e.direction !== ''){
-         this.params['sortColumn'] = e.active;
-         this.params['sortOrder'] = e.direction.toUpperCase();
+    if (e.direction !== '') {
+      this.params['sortColumn'] = e.active;
+      this.params['sortOrder'] = e.direction.toUpperCase();
 
-      }else{
-          this.params['sortColumn'] = null;
-          this.params['sortOrder'] = null;
-      }
+    } else {
+      this.params['sortColumn'] = null;
+      this.params['sortOrder'] = null;
+    }
 
-      console.log('params ' + JSON.stringify(this.params));
+    console.log('params ' + JSON.stringify(this.params));
   }
 
-
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Client): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.nom + 1}`;
+  }s
 }

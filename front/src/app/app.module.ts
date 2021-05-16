@@ -98,6 +98,7 @@ import {NgxMatDrpModule} from 'ngx-mat-daterange-picker';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import { ClientModule } from './client/client.module';
 import { ClientComponent } from './client/client.component';
+import { SharedModule } from './shared/shared.module';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -151,6 +152,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -180,8 +182,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     ChartsModule,
     NgSelectModule,
-    NgxDaterangepickerMd.forRoot(),
-    ClientModule
+    NgxDaterangepickerMd.forRoot()
   ],
   providers: [
     {
