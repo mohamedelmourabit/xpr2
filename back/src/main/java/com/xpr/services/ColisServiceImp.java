@@ -116,9 +116,6 @@ public class ColisServiceImp extends AbstractCRUDController<Colis, String> imple
 			clonedColis = colis.clone();
 			colis.setLigneColis(new HashSet<LigneColis>());
 			colis = colisRepository.save(colis);
-			
-			
-			
 				
 				for(LigneColis ligneColis : clonedColis.getLigneColis()) {
 					
@@ -134,8 +131,6 @@ public class ColisServiceImp extends AbstractCRUDController<Colis, String> imple
 					ligneColisRepository.save(ligneColis);
 				}
 				
-			
-			
 			
 			HistoriqueColis h = HistoriqueColis.getHistorique("Ajout d'un nouveau colis" , colis,
 					getCurrentUser().getEmail());
@@ -208,7 +203,7 @@ public class ColisServiceImp extends AbstractCRUDController<Colis, String> imple
 
 			return colisRepository.save(colis);
 		} else {
-			throw new ColisException("Modification du colis interdit arpès ramassage ");
+			throw new ColisException("Modification du colis interdit après ramassage ");
 		}
 
 	}
@@ -238,7 +233,7 @@ public class ColisServiceImp extends AbstractCRUDController<Colis, String> imple
 			
 			return colis;
 		} else {
-			throw new ColisException("Modification du colis interdit arpès ramassage ");
+			throw new ColisException("Modification du colis interdit après ramassage ");
 		}
 	}
 

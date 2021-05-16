@@ -44,6 +44,7 @@ export class ColisComponent implements  OnInit{
   
   coliss : Colis[]= [];
   size:number;
+  
 
   constructor( private router: Router,
     private colisService: ColisService, private villeService: VilleService,
@@ -54,6 +55,13 @@ export class ColisComponent implements  OnInit{
   ngOnInit() {
       
       this.chargerColis();
+  }
+
+  reloadColis(reload:boolean){
+    console.log("reload "+ reload);
+    if(reload){
+      this.chargerColis();
+    }
   }
 
   

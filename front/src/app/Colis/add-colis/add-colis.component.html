@@ -31,13 +31,14 @@
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
-
-        <div *ngIf="errorForm" class="alert alert-danger">
-            {{errorMessage}}
-        </div>
+       
+       
     </div>
     <form #f="ngForm" (ngSubmit)="ajouterColis(f.value)">
         <div class="modal-body">
+            <div *ngIf="errorForm" class="alert alert-danger">
+                {{errorMessage}}
+            </div>
             <div style="overflow: auto;
     display: flex;
     flex-direction: column;">

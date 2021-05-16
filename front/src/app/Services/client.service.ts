@@ -20,8 +20,8 @@ export class ClientService{
     return this.http.get(this.host + '/client/clients/?ice=' + ice,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
   }
 
-  getClients(ice: string){
-    return this.http.get(this.host + '/client/clients/' + ice,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
+  getClients(){
+    return this.http.get(this.host + '/client/clients/' ,{headers: new HttpHeaders({'Authorization': this.authenticationService.getToken()})});
   }
 
   modifierClient(client: Client){

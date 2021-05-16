@@ -311,8 +311,8 @@ export class ListColisComponent implements OnInit,AfterViewInit {
         },
         err => {
           this.errorUpdateForm=true;
-          this.errorUpdateMessage=err.error.message;
-
+          this.errorUpdateMessage=err.message;
+          
           console.log("error add colis ", err);
         }
     );

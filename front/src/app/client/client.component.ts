@@ -32,7 +32,7 @@ export class ClientComponent implements OnInit {
   ngOnInit(): void {
     this.chargerVilles();
     this.loading = true;
-    this.clientService.getClient("0").subscribe(
+    this.clientService.getClients().subscribe(
       (data: any) => {
           this.clients = data;
       }).add(() => {
@@ -50,4 +50,7 @@ export class ClientComponent implements OnInit {
         }
     );
   }
+
+  
+
 }

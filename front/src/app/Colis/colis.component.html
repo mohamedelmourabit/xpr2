@@ -1,7 +1,7 @@
 <div> 
-    <app-add-colis></app-add-colis>
+    <app-add-colis (isAdded)="reloadColis($event)"></app-add-colis>
 </div>
 <div *ngIf="!loading"> 
-    <app-list-colis [coliss]="coliss" [size]="size" ></app-list-colis>
+    <app-list-colis  [coliss]="coliss" [size]="size" ></app-list-colis>
 </div>
 

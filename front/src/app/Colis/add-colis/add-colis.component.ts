@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   HostListener,
   OnInit,
   Output,
@@ -41,6 +42,9 @@ export class AddColisComponent implements OnInit {
 
   isLoading = true;
   public isFilterCollapsed = true;
+
+  @Output() isAdded  = new EventEmitter<boolean>();
+
   
   currentColis: Colis;
   
@@ -58,8 +62,8 @@ export class AddColisComponent implements OnInit {
 
   mode: number;
 
-  @Output() isAdded : boolean  = false;
-
+ 
+  
 
   
   constructor(private ref: ChangeDetectorRef, private autorisation: Autorisation, private router: Router,
@@ -128,15 +132,18 @@ export class AddColisComponent implements OnInit {
     colis.remarque = colisFormulaire.remarque;
     this.colisService.ajouterColis (colis).subscribe(
         (data: Colis) => {
-          this.isAdded = true;
+          this.isAdded.emit(true);
           this.modalService.dismissAll();
           this.errorForm = false;
           this.errorMessage = '';
         },
         err => {
+          this.isAdded.emit(false);
           this.errorForm = true;
-          this.errorMessage = err.error.message;
-          console.log('error add colis ', err);
+          this.errorMessage = err.message;
+          console.log('error  ', err.message);
+          console.log('error add colis ', err.error.message);
+          
         }
     );
   }

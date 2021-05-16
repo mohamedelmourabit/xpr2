@@ -134,11 +134,11 @@ public class Colis extends XprBaseModel implements Serializable,Cloneable {
 	
 
 	@OneToMany(mappedBy = "colis",fetch = FetchType.EAGER)
-	private Set<HistoriqueColis> historiques;
+	private Set<HistoriqueColis> historiques = new HashSet<HistoriqueColis>();
 	
 	@OneToMany(mappedBy = "colis",fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<Commentaire> commentaires;
+	private Set<Commentaire> commentaires = new HashSet<Commentaire>();
 	
 	
 	@OneToMany(mappedBy = "colis",fetch = FetchType.EAGER)
