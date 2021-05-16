@@ -30,14 +30,11 @@ export class ClientComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
-    console.warn('hello from module compoenne');
     this.chargerVilles();
     this.loading = true;
     this.clientService.getClient("0").subscribe(
       (data: any) => {
           this.clients = data;
-          console.warn("this.clients");
-          console.log(this.clients);
       }).add(() => {
         setTimeout(() => {
           this.loading = false;
