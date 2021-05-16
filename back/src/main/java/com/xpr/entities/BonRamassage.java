@@ -39,6 +39,7 @@ public class BonRamassage extends XprBaseModel implements Serializable {
 	private Client client;
 	
 	@OneToMany(mappedBy = "bonRamassage",fetch = FetchType.EAGER)
+	@JsonView(ModelViews.SelectView.class)
 	private Set<Colis> colis;
 	
 	
@@ -54,6 +55,7 @@ public class BonRamassage extends XprBaseModel implements Serializable {
 	private boolean disabled;
 	
 	@OneToMany(mappedBy = "bonRamassage",fetch = FetchType.EAGER)
+	@JsonView(ModelViews.SelectView.class)
 	private Set<HistoriqueBonRamassage> historiques;
 	
 	@ManyToOne

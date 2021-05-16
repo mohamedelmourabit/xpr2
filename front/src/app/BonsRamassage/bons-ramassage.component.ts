@@ -215,8 +215,8 @@ export class BonsRamassageComponent implements OnInit {
             let colisLivre =0;
             let colisEnAttente=0;
             let nbColis=0;
-
-            /*for(const coli of br.colis){
+            console.log(JSON.stringify('data2 '+data.content.colis));
+            for(const coli of br.colis){
               nbColis  = nbColis +1;
 
               switch (coli.statut.code){
@@ -226,7 +226,7 @@ export class BonsRamassageComponent implements OnInit {
                 default : break;
               }
 
-            }*/
+            }
             br.colisRamasse = colisRamasse;
             br.nbColis = nbColis;
             br.colisEnAttente = colisEnAttente;

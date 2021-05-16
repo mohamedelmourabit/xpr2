@@ -7,9 +7,7 @@ table {
 .mat-row:hover {
   background-color: blanchedalmond;
 }
-.mat-row mat-checkbox {
 
-}
 .mat-row:hover mat-checkbox {
   display: block;
 }
@@ -17,6 +15,21 @@ table {
 .mat-checkbox-inner-container {
   height: auto !important;
   width:  auto !important;
+  }
+
+
+.font-icon-wrapper {
+  text-align: center;
+    border: #e9ecef solid 0px;
+    border-radius: 0.25rem;
+    margin: 0 0 0px;
+    padding: 0px;
+}
+
+
+.mat-checkbox-inner-container {
+  height: auto !important;
+  width: auto !important;
   }
 
 tr.mat-header-row {
